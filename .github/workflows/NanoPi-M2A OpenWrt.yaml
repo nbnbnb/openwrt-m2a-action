@@ -38,8 +38,8 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get install -y sudo wget
-          wget https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh
-          sudo sh ./install.sh
+          wget https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh -O ~
+          sudo sh ~/install.sh
       
           
       - name: Install Repo

@@ -38,11 +38,7 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get install -y sudo wget
-          mkdir kkking
-          cd kkking
-          wget https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh
-          sudo sh ./install.sh
-      
+          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | sudo bash      
           
       - name: Install Repo
         run: |

@@ -38,7 +38,7 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get install -y sudo wget
-          #sudo apt remove python3
+          sudo apt remove python3
           #sudo apt install python2
           sudo ln -s /usr/bin/python3 /usr/bin/python
           

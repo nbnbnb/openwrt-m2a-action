@@ -31,14 +31,15 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: master
-
-      - name: Initialization Environment
+          
+      - name: Update Environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo apt-get -y update
           sudo apt-get install -y sudo wget
-          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | sudo bash      
+          sudo apt remove python3
+          sudo apt install python2
           
       - name: Install Repo
         run: |
@@ -51,9 +52,15 @@ jobs:
           cd friendlywrt-s5p4418
           repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b openwrt-lean -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
           repo sync -c --no-clone-bundle -j8
-                         
-      - name: Build OpenWrt
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
+          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | sudo bash     
+
+      - name: Build OpenWrt
+        run: |        
           cd friendlywrt-s5p4418
           ./build.sh nanopi_m2a.mk
           

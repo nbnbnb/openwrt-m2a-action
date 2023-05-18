@@ -55,11 +55,7 @@ jobs:
       - name: Build OpenWrt
         run: |
           cd friendlywrt-s5p4418
-          cp s5p4418_config friendlywrt/.config
-          cd friendlywrt
-          ./scripts/feeds update -a && ./scripts/feeds install -a
-          make download -j8 V=s
-          make V=s -j1
+          ./build.sh nanopi_m2a.mk
           
       
 

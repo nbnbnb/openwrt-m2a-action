@@ -38,13 +38,13 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get install -y wget
-          sudo apt remove python3
+          #sudo apt remove python3
           sudo apt install python2
           #sudo ln -s /usr/bin/python3 /usr/bin/python
           
       - name: Install Repo
         run: |
-          git clone https://github.com/friendlyarm/repo
+          git clone https://github.com/nbnbnb/repo
           sudo cp repo/repo /usr/bin/
           
       - name: Download Source

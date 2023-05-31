@@ -62,7 +62,8 @@ jobs:
           wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | sudo bash     
 
       - name: Build OpenWrt
-        run: |        
+        run: |     
+          cp s5p4418_config friendlywrt-s5p4418/friendlywrt/.config
           cd friendlywrt-s5p4418
           ./build.sh nanopi_m2a.mk
           

@@ -38,7 +38,6 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get install -y wget
-          #sudo apt remove python3
           sudo apt install python2
           sudo rm -rf /usr/bin/python
           sudo ln -s /usr/bin/python2 /usr/bin/python
@@ -63,6 +62,9 @@ jobs:
 
       - name: Build OpenWrt
         run: |     
+          sudo apt install python2
+          sudo rm -rf /usr/bin/python
+          sudo ln -s /usr/bin/python2 /usr/bin/python        
           cp s5p4418_config friendlywrt-s5p4418/friendlywrt/.config
           cd friendlywrt-s5p4418
           ./build.sh nanopi_m2a.mk

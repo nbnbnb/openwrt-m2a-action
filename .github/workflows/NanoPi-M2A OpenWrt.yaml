@@ -66,10 +66,7 @@ jobs:
           sudo rm -rf /usr/bin/python
           sudo ln -s /usr/bin/python2 /usr/bin/python        
           cp s5p4418_config friendlywrt-s5p4418/friendlywrt/.config
-          cd friendlywrt-s5p4418
-          
-          # Mods
-          sed -i 's/ssl||/ssl/g' friendlywrt/tmp/.config-package.in
+          cd friendlywrt-s5p4418  
           
           ./build.sh nanopi_m2a.mk
           

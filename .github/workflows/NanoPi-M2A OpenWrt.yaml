@@ -90,7 +90,7 @@ jobs:
           git branch --set-upstream-to=origin/master master
                                         
           # update patch
-          cd friendlywrt-s5p4418/friendlywrt/tools/m4/patches
+          cd ../../../tools/m4/patches
           wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
 
           cd ../../../..

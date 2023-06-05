@@ -71,6 +71,10 @@ jobs:
           sudo ln -s /usr/bin/python2 /usr/bin/python        
           cp s5p4418_config friendlywrt-s5p4418/friendlywrt/.config
 
+          # Compile fail
+          rm -rf friendlywrt-s5p4418/friendlywrt/package/network/services/hostapd
+          
+          # update patch
           cd friendlywrt-s5p4418/friendlywrt/tools/m4/patches
           wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
 

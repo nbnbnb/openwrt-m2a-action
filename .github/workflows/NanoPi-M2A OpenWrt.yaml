@@ -74,13 +74,26 @@ jobs:
           # Compile fail
           rm -rf friendlywrt-s5p4418/friendlywrt/package/network/services/hostapd
           
+          # diy
+          mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy
+          cd friendlywrt-s5p4418/friendlywrt/package/diy
+          git clone https://github.com/jerrykuku/luci-app-vssr.git
+          git clone https://github.com/jerrykuku/lua-maxminddb.git
+                
+          mkdir luci-app-openclash
+          cd luci-app-openclash
+          git init
+          git remote add -f origin https://github.com/vernesong/OpenClash.git
+          git config core.sparsecheckout true
+          echo "luci-app-openclash" >> .git/info/sparse-checkout
+          git pull --depth 1 origin master
+          git branch --set-upstream-to=origin/master master
+                                        
           # update patch
           cd friendlywrt-s5p4418/friendlywrt/tools/m4/patches
           wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
 
           cd ../../../..
-          
+                   
           ./build.sh nanopi_m2a.mk
           
-      
-

@@ -77,8 +77,8 @@ jobs:
           # diy
           mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy
           cd friendlywrt-s5p4418/friendlywrt/package/diy
-          git clone https://github.com/jerrykuku/luci-app-vssr.git
-          git clone https://github.com/jerrykuku/lua-maxminddb.git
+          git clone https://github.com/nbnbnb/luci-app-vssr.git
+          git clone https://github.com/nbnbnb/lua-maxminddb.git
                 
           mkdir luci-app-openclash
           cd luci-app-openclash

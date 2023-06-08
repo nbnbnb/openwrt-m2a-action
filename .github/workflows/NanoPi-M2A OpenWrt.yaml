@@ -94,9 +94,13 @@ jobs:
           wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
 
           cd ../../..
-          make defconfig
-          make download -j8
-          make -j1 V=s 
+          
+          echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
+          echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> "feeds.conf.default"
+          
+          #make defconfig
+          #make download -j8
+          #make -j1 V=s 
 
           cd ..
                    

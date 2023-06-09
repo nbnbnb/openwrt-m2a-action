@@ -1,4 +1,4 @@
-name: NanoPi-M2A OpenWrt Build
+name: NanoPi-M2A-Init Build
 
 on:
   push:

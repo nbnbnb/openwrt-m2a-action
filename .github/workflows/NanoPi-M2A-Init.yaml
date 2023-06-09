@@ -62,8 +62,9 @@ jobs:
 
       - name: Build OpenWrt
         run: |     
-          cp init_config friendlywrt-s5p4418/friendlywrt/.config                   
-          ./friendlywrt-s5p4418/build.sh nanopi_m2a.mk
+          cp init_config friendlywrt-s5p4418/friendlywrt/.config  
+          cd friendlywrt-s5p4418                 
+          ./build.sh nanopi_m2a.mk
           
       - name: Zip Files
         run: |

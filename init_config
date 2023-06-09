@@ -6112,7 +6112,7 @@ CONFIG_OPENLDAP_DEBUG=y
 # CONFIG_PACKAGE_genl is not set
 # CONFIG_PACKAGE_igmpproxy is not set
 # CONFIG_PACKAGE_ip-bridge is not set
-CONFIG_PACKAGE_ip-full=y
+# CONFIG_PACKAGE_ip-full=y
 CONFIG_PACKAGE_ip-tiny=y
 # CONFIG_PACKAGE_lldpd is not set
 # CONFIG_PACKAGE_mcproxy is not set

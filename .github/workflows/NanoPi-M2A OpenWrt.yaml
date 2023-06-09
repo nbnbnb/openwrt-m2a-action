@@ -98,15 +98,16 @@ jobs:
           echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
           echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> "feeds.conf.default"
           
-          #make defconfig
-          #make download -j8
-          #make -j1 V=s 
           
           ./scripts/feeds update packages
           rm -rf feeds/packages/lang/golang
           svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang          
 
           cd ..
+          
+          # Compile fail
+          rm -rf friendlywrt/feeds/packages/utils/runc 
+          rm -rf friendlywrt/feeds/packages/utils/containerd
                    
           ./build.sh nanopi_m2a.mk
           

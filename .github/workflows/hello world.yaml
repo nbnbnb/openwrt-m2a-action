@@ -66,7 +66,7 @@ jobs:
           cd friendlywrt-s5p4418                 
           ./build.sh nanopi_m2a.mk
     
-      - name: Build OpenWrt
+      - name: Build HelloWorld
         run: |     
           # diy 
            mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
@@ -92,7 +92,7 @@ jobs:
 
            cd ..
 
-           sudo ./build.sh sd-img
+           ./build.sh sd-img
 
 
 

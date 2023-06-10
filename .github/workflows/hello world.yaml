@@ -65,7 +65,38 @@ jobs:
           cp init_config friendlywrt-s5p4418/friendlywrt/.config  
           cd friendlywrt-s5p4418                 
           ./build.sh nanopi_m2a.mk
-          
+    
+      - name: Build OpenWrt
+        run: |     
+          # diy 
+           mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
+           cd friendlywrt-s5p4418/friendlywrt/package/diy 
+           git clone https://github.com/nbnbnb/luci-app-vssr.git 
+           git clone https://github.com/nbnbnb/lua-maxminddb.git 
+                  
+           mkdir luci-app-openclash 
+           cd luci-app-openclash 
+           git init 
+           git remote add -f origin https://github.com/vernesong/OpenClash.git 
+           git config core.sparsecheckout true 
+           echo "luci-app-openclash" >> .git/info/sparse-checkout 
+           git pull --depth 1 origin master 
+           git branch --set-upstream-to=origin/master master
+
+           cd ../../..
+           ./scripts/feeds update -a && ./scripts/feeds install -a
+
+           make download -j8
+
+           make V=s
+
+           cd ..
+
+           sudo ./build.sh sd-img
+
+
+
+    
       - name: Zip Files
         run: |
           find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}

@@ -94,7 +94,7 @@ jobs:
 
           make download -j8
 
-          make V=s
+          # make V=s
 
           cd ..
 

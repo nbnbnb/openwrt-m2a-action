@@ -69,30 +69,36 @@ jobs:
       - name: Build HelloWorld
         run: |     
           # diy 
-           mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
-           cd friendlywrt-s5p4418/friendlywrt/package/diy 
-           git clone https://github.com/nbnbnb/luci-app-vssr.git 
-           git clone https://github.com/nbnbnb/lua-maxminddb.git 
+          mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
+          cd friendlywrt-s5p4418/friendlywrt/package/diy 
+          git clone https://github.com/nbnbnb/luci-app-vssr.git 
+          git clone https://github.com/nbnbnb/lua-maxminddb.git 
                   
-           mkdir luci-app-openclash 
-           cd luci-app-openclash 
-           git init 
-           git remote add -f origin https://github.com/vernesong/OpenClash.git 
-           git config core.sparsecheckout true 
-           echo "luci-app-openclash" >> .git/info/sparse-checkout 
-           git pull --depth 1 origin master 
-           git branch --set-upstream-to=origin/master master
+          mkdir luci-app-openclash 
+          cd luci-app-openclash 
+          git init 
+          git remote add -f origin https://github.com/vernesong/OpenClash.git 
+          git config core.sparsecheckout true 
+          echo "luci-app-openclash" >> .git/info/sparse-checkout 
+          git pull --depth 1 origin master 
+          git branch --set-upstream-to=origin/master master
 
-           cd ../../..
-           ./scripts/feeds update -a && ./scripts/feeds install -a
+          cd ../../..
 
-           make download -j8
 
-           make V=s
 
-           cd ..
+          echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
+          echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> "feeds.conf.default"
+          
+          ./scripts/feeds update -a && ./scripts/feeds install -a
 
-           ./build.sh sd-img
+          make download -j8
+
+          make V=s
+
+          cd ..
+
+          ./build.sh sd-img
 
 
 

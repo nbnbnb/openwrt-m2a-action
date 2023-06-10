@@ -78,7 +78,7 @@ jobs:
           find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
           cp friendlywrt-s5p4418/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
-          release_tag="NanoPi-M2A-$(date +%Y-%m-%d)"
+          release_tag="NanoPi-M2A-HelloWorld-$(date +%Y-%m-%d)"
           echo "##[set-output name=release_tag;]$release_tag"
           
       - name: Create Release

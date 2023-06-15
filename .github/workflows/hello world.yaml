@@ -68,6 +68,10 @@ jobs:
     
       - name: Build HelloWorld
         run: |     
+
+          rm friendlywrt-s5p4418/out/*.img
+          rm friendlywrt-s5p4418/out/*.zip
+
           # diy 
           mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
           cd friendlywrt-s5p4418/friendlywrt/package/diy 

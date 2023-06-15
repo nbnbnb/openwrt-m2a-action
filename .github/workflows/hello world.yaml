@@ -70,7 +70,7 @@ jobs:
         run: |     
 
           rm friendlywrt-s5p4418/out/*.img
-          rm friendlywrt-s5p4418/out/*.zip
+          #rm friendlywrt-s5p4418/out/*.zip
 
           # diy 
           mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 

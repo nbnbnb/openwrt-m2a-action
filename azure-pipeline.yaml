@@ -11,7 +11,7 @@ resources:
     type: git
     ref: master
 jobs:
-- job: Build & Publish
+- job: Build
   displayName: M2A Hello World
   timeoutInMinutes: 120
   pool:

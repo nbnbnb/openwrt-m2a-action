@@ -1,30 +1,43 @@
-name: NanoPi-M2A-HelloWorld Build
-
+# Cron Schedules have been converted using UTC Time Zone and may need to be updated for your location
+schedules:
+- cron: 0 3 * * *
+  branches:
+    include:
+    - master
+  always: true
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: master
 jobs:
+- job: Build & Publish
+  displayName: M2A Hello World
+  timeoutInMinutes: 120
+  pool:
+    vmImage: ubuntu-22.04
+  steps:
+  - checkout: self
+    clean: true
 
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@master
-        with:
-          ref: master
-          
-      - name: Update Python
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
+  - task: Bash@3
+    displayName: Update Python
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your commands here
           sudo apt-get -y update
           sudo apt-get install -y wget
           sudo apt-get install -y python2 
           sudo rm -rf /usr/bin/python
           sudo ln -s /usr/bin/python2 /usr/bin/python
-          
-      - name: Install Repo
-        run: |
+
+  - task: Bash@3
+    displayName: Install Repo
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your commands here
           git clone https://github.com/nbnbnb/repo
           sudo cp repo/repo /usr/bin/
 
@@ -37,31 +50,46 @@ jobs:
           # 使用指定版本 GCC
           sudo apt-get install g++-9 -y
           sudo apt-get install gcc-9 -y
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-9          
-          
-      - name: Download Source
-        run: |
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-9           
+
+  - task: Bash@3
+    displayName: Download Source
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your commands here
           mkdir friendlywrt-s5p4418
           cd friendlywrt-s5p4418
           repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
-          repo sync -c --no-clone-bundle -j8
+          repo sync -c --no-clone-bundle -j8        
 
-      - name: Mods
-        run: |
+  - task: Bash@3
+    displayName: Mods
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your commands here
           rm -rf friendlywrt-s5p4418/friendlywrt/package/network/services/hostapd
           cd friendlywrt-s5p4418/friendlywrt/tools/m4/patches
           wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
 
 
-      - name: Build OpenWrt
-        run: |     
+  - task: Bash@3
+    displayName: Build OpenWrt
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your commands here
           cp init_config friendlywrt-s5p4418/friendlywrt/.config  
           cd friendlywrt-s5p4418                 
-          ./build.sh nanopi_m2a.mk
-    
-      - name: Build HelloWorld
-        run: |     
+          ./build.sh nanopi_m2a.mk        
 
+  - task: Bash@3
+    displayName: Build HelloWorld
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your commands here
           rm friendlywrt-s5p4418/out/*.img
           #rm friendlywrt-s5p4418/out/*.zip
 
@@ -82,8 +110,6 @@ jobs:
 
           cd ../../..
 
-
-
           echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
           echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> "feeds.conf.default"
           
@@ -98,44 +124,10 @@ jobs:
           ./build.sh sd-img
 
 
-
-    
-      - name: Zip Files
-        run: |
-          find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}
-          
-      - name: Assemble Artifact
-        id: assemble_artifact
-        run: |
-          rm -rf ./artifact/
-          mkdir -p ./artifact/
-          find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
-          cp friendlywrt-s5p4418/friendlywrt/.config ./artifact/
-          zip -r artifact.zip ./artifact/
-          release_tag="NanoPi-M2A-HelloWorld-$(date +%Y-%m-%d)"
-          echo "##[set-output name=release_tag;]$release_tag"
-          
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.repo_access }}
-        with:
-          tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
-          release_name: 自动发布 ${{ steps.assemble_artifact.outputs.release_tag }}
-          draft: false
-          prerelease: false
-          
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.repo_access }}
-        with:
-          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. 
-          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./artifact.zip
-          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-HelloWorld.zip
-          asset_content_type: application/zip          
-
+  - task: Bash@3
+    displayName: Others
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your commands here
+                                            

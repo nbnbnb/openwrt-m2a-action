@@ -71,10 +71,6 @@ jobs:
 
           # 空间不够，删除无用
           rm friendlywrt-s5p4418/out/*.img
-          rm -rf friendlywrt-s5p4418/friendlywrt/toolchain
-          rm -rf friendlywrt-s5p4418/friendlywrt/device
-          rm -rf friendlywrt-s5p4418/friendlywrt/kernel
-          rm -rf friendlywrt-s5p4418/friendlywrt/u-boot
 
           # diy - app-vssr
           mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
@@ -83,16 +79,9 @@ jobs:
           git clone https://github.com/nbnbnb/lua-maxminddb.git 
                   
           # diy - app-openclash
-          mkdir luci-app-openclash 
-          cd luci-app-openclash 
-          git init 
-          git remote add -f origin https://github.com/vernesong/OpenClash.git 
-          git config core.sparsecheckout true 
-          echo "luci-app-openclash" >> .git/info/sparse-checkout 
-          git pull --depth 1 origin master 
-          git branch --set-upstream-to=origin/master master
+          git clone --depth 1 https://github.com/vernesong/OpenClash.git
 
-          cd ../../..
+          cd ../..
 
           # diy - package-helloworld
           echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"

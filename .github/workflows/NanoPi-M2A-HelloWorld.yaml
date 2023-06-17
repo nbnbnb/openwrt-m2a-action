@@ -83,6 +83,10 @@ jobs:
           # diy - app-openclash
           git clone --depth 1 https://github.com/vernesong/OpenClash.git
 
+          pushd OpenClash/luci-app-openclash/tools/po2lmo
+          make && sudo make install
+          popd
+
           cd ../..
 
           # diy - package-helloworld

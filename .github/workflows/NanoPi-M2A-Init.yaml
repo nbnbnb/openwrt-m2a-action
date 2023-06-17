@@ -1,5 +1,9 @@
 name: NanoPi-M2A-Init Build
 
+on:
+  schedule:
+    - cron: '0 22 * * *'
+
 jobs:
 
   build:

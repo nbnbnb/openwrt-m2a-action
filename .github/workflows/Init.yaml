@@ -1,11 +1,8 @@
-name: NanoPi-M2A-HelloWorld Build
+name: Init Build
 
 on:
-  push:
-    branches: 
-      - master
   schedule:
-    - cron: '0 22 * * *'
+    - cron: '0 11 * * *'
 
 jobs:
 
@@ -65,46 +62,7 @@ jobs:
           cp init_config friendlywrt-s5p4418/friendlywrt/.config  
           cd friendlywrt-s5p4418                 
           ./build.sh nanopi_m2a.mk
-    
-      - name: Build HelloWorld
-        run: |     
-
-          cp helloworld_config friendlywrt-s5p4418/friendlywrt/.config 
-
-          # 空间不够，删除无用
-          rm friendlywrt-s5p4418/out/*.img
-
-          # diy - app-vssr
-          mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
-          cd friendlywrt-s5p4418/friendlywrt/package/diy 
-          git clone https://github.com/nbnbnb/luci-app-vssr.git 
-          git clone https://github.com/nbnbnb/lua-maxminddb.git 
-                  
-          # diy - app-openclash
-          git clone --depth 1 https://github.com/vernesong/OpenClash.git
-
-          pushd OpenClash/luci-app-openclash/tools/po2lmo
-          make && sudo make install
-          popd
-
-          cd ../..
-
-          # diy - package-helloworld
-          echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
-          echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> "feeds.conf.default"
           
-          ./scripts/feeds update -a && ./scripts/feeds install -a
-          make download -j8
-
-          # go-version 1.13 to 1.19
-          rm -rf feeds/packages/lang/golang
-          svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
-
-          cd .. 
-
-          ./build.sh friendlywrt
-          ./build.sh sd-img
-    
       - name: Zip Files
         run: |
           find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}
@@ -117,7 +75,7 @@ jobs:
           find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
           cp friendlywrt-s5p4418/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
-          release_tag="NanoPi-M2A-HelloWorld-$(date +%Y%m%d%H%M%S)"
+          release_tag="Init-$(date +%Y-%m-%d)"
           echo "##[set-output name=release_tag;]$release_tag"
           
       - name: Create Release
@@ -127,7 +85,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.repo_access }}
         with:
           tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
-          release_name: 自动发布 ${{ steps.assemble_artifact.outputs.release_tag }}
+          release_name: ${{ steps.assemble_artifact.outputs.release_tag }}
           draft: false
           prerelease: false
           
@@ -141,7 +99,7 @@ jobs:
           # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
           asset_path: ./artifact.zip
-          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-HelloWorld.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-Init.zip
           asset_content_type: application/zip          
 
 

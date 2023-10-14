@@ -107,6 +107,10 @@ jobs:
           rm -rf kernel/
           rm -rf .repo/          
 
+          # 切换到 Python3
+          sudo rm -rf /usr/bin/python
+          sudo ln -s /usr/bin/python3 /usr/bin/python
+
           ./build.sh friendlywrt
           ./build.sh sd-img
     

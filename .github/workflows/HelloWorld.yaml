@@ -85,7 +85,7 @@ jobs:
           cd ../..
 
           # diy - package-helloworld
-          # 使用 2023.07.01 版本的 helloworld（更高版本编译与 Go 1.19 版本不兼容）
+          # 使用 2023.07.01 版本的 helloworld（编译更高版本与 Go 1.19 版本不兼容）
           echo "src-git helloworld https://github.com/fw876/helloworld.git^9161344bd2541c2c32525d6f48a4a454db2c1c1d" >> "feeds.conf.default"
           echo "src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main" >> "feeds.conf.default"
 

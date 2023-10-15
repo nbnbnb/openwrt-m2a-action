@@ -91,7 +91,7 @@ jobs:
           ./scripts/feeds update -a && ./scripts/feeds install -a
           make download -j8
 
-          # go-version 1.13 to 1.19
+          # go-version 1.13.8 to 1.19
           rm -rf feeds/packages/lang/golang
           svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
 

@@ -1,11 +1,8 @@
 name: HelloWorld Build
 
 on:
-  push:
-    branches: 
-      - master
   schedule:
-    - cron: '0 0 * * 5'
+    - cron: '0 22 * * *'
 
 jobs:
 
@@ -90,26 +87,17 @@ jobs:
           cd ../..
 
           # diy - package-helloworld
-          echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
+          echo "src-git helloworld https://github.com/fw876/helloworld.git^9161344bd2541c2c32525d6f48a4a454db2c1c1d" >> "feeds.conf.default"
           echo "src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main" >> "feeds.conf.default"
-          echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main" >> "feeds.conf.default"
           
           ./scripts/feeds update -a && ./scripts/feeds install -a
           make download -j8
 
-          # go-version 1.13 to 1.19.13
+          # go-version 1.13 to 1.19
           rm -rf feeds/packages/lang/golang
           svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
 
           cd .. 
-
-          # 空间不够，删除无用代码
-          rm -rf kernel/
-          rm -rf .repo/          
-
-          # 切换到 Python3
-          sudo rm -rf /usr/bin/python
-          sudo ln -s /usr/bin/python3 /usr/bin/python
 
           ./build.sh friendlywrt
           ./build.sh sd-img

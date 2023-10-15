@@ -2,7 +2,7 @@ name: HelloWorld Build
 
 on:
   schedule:
-    - cron: "0 22 * * *"
+    - cron: "0 0 * * 5"
   push:
     branches:
       - master

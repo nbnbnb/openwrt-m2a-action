@@ -99,9 +99,13 @@ jobs:
           cd .. 
 
           # 空间不够，删除无用代码
-          rm -rf .repo/                    
+          rm -rf .repo/    
 
           ./build.sh friendlywrt
+
+          # 空间不够，删除无用代码
+          rm -rf .kernal/    
+
           ./build.sh sd-img
 
       - name: Zip Files

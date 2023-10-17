@@ -59,7 +59,7 @@ jobs:
         run: |
           cp init_config friendlywrt-s5p4418/friendlywrt/.config  
           cd friendlywrt-s5p4418                 
-          ./build.sh nanopi_m2a.mk
+          
 
       - name: Build HelloWorld
         run: |
@@ -67,7 +67,7 @@ jobs:
           cp helloworld_config friendlywrt-s5p4418/friendlywrt/.config 
 
           # 空间不够，删除无用
-          rm friendlywrt-s5p4418/out/*.img
+          #rm friendlywrt-s5p4418/out/*.img
 
           # diy - app-vssr
           mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
@@ -99,14 +99,16 @@ jobs:
           cd .. 
 
           # 空间不够，删除无用代码
-          rm -rf .repo/    
+          #rm -rf .repo/    
 
-          ./build.sh friendlywrt
+          #./build.sh friendlywrt
 
           # 空间不够，删除无用代码
-          rm -rf .kernal/    
+          #rm -rf .kernal/    
 
-          ./build.sh sd-img
+          #./build.sh sd-img
+
+          ./build.sh nanopi_m2a.mk
 
       - name: Zip Files
         run: |

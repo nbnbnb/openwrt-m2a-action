@@ -1,11 +1,12 @@
 name: HelloWorld Build
 
 on:
-  schedule:
-    - cron: "0 0 * * 5"
   push:
     branches:
       - master
+  schedule:
+    - cron: "0 0 * * 5"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -85,27 +86,27 @@ jobs:
           cd ../..
 
           # diy - package-helloworld
-          # 使用 2023.07.01 版本的 helloworld（编译更高版本与 Go 1.19 版本不兼容）
-          echo "src-git helloworld https://github.com/fw876/helloworld.git^9161344bd2541c2c32525d6f48a4a454db2c1c1d" >> "feeds.conf.default"
+          echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
           echo "src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main" >> "feeds.conf.default"
+          echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall.git;main" >> "feeds.conf.default"
 
           ./scripts/feeds update -a && ./scripts/feeds install -a
           make download -j8
 
-          # go-version 1.13.8 to 1.19.13
+          # go-version 1.13 to 1.19.13
           rm -rf feeds/packages/lang/golang
           svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
 
           cd .. 
 
           # 空间不够，删除无用代码
-          rm -rf .repo/    
+          rm -rf .repo/          
+
+          # 切换到 Python3
+          sudo rm -rf /usr/bin/python
+          sudo ln -s /usr/bin/python3 /usr/bin/python
 
           ./build.sh friendlywrt
-
-          # 空间不够，删除无用代码
-          rm -rf .kernal/    
-
           ./build.sh sd-img
 
       - name: Zip Files

@@ -33,8 +33,8 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 --slave /u
 cd ~
 
 # Download Source
-mkdir friendlywrt-s5p4418
-cd friendlywrt-s5p4418
+mkdir friendlywrt-s5p4418-beta
+cd friendlywrt-s5p4418-beta
 repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
 repo sync -c --no-clone-bundle -j8
 
@@ -42,8 +42,8 @@ repo sync -c --no-clone-bundle -j8
 cd ~
 
 # Mods
-rm -rf friendlywrt-s5p4418/friendlywrt/package/network/services/hostapd
-cd friendlywrt-s5p4418/friendlywrt/tools/m4/patches
+rm -rf friendlywrt-s5p4418-beta/friendlywrt/package/network/services/hostapd
+cd friendlywrt-s5p4418-beta/friendlywrt/tools/m4/patches
 wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
 
 # ------------------
@@ -52,8 +52,8 @@ cd ~
 # Build OpenWrt
 
 wget https://zhangjin.tk/dl/m2a/init_config -O init_config
-cp init_config friendlywrt-s5p4418/friendlywrt/.config  
-cd friendlywrt-s5p4418                 
+cp init_config friendlywrt-s5p4418-beta/friendlywrt/.config  
+cd friendlywrt-s5p4418-beta                 
 ./build.sh nanopi_m2a.mk
 
 # ------------------
@@ -62,14 +62,14 @@ cd ~
 # Build HelloWorld
 # wget https://zhangjin.tk/dl/m2a/helloworld_config -O helloworld_config
 wget https://raw.githubusercontent.com/nbnbnb/openwrt-m2a-action/master/helloworld_config -O helloworld_config
-cp helloworld_config friendlywrt-s5p4418/friendlywrt/.config  
+cp helloworld_config friendlywrt-s5p4418-beta/friendlywrt/.config  
 
 # 空间不够，删除无用
-sudo rm friendlywrt-s5p4418/out/*.img
+sudo rm friendlywrt-s5p4418-beta/out/*.img
 
 # diy - app-vssr
-mkdir -p friendlywrt-s5p4418/friendlywrt/package/diy 
-cd friendlywrt-s5p4418/friendlywrt/package/diy 
+mkdir -p friendlywrt-s5p4418-beta/friendlywrt/package/diy 
+cd friendlywrt-s5p4418-beta/friendlywrt/package/diy 
 git clone --depth 1 https://github.com/nbnbnb/luci-app-vssr.git 
 git clone --depth 1 https://github.com/nbnbnb/lua-maxminddb.git 
 	  
@@ -140,5 +140,5 @@ echo "脚本执行耗时：$minutes 分钟 $seconds 秒"
 
 
 # Zipfile
-find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}
-sudo cp friendlywrt-s5p4418/out/FriendlyWrt_*.zip /home/zhangjin/mount
+find friendlywrt-s5p4418-beta/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}
+sudo cp friendlywrt-s5p4418-beta/out/FriendlyWrt_*.zip /home/zhangjin/mount

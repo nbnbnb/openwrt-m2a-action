@@ -140,5 +140,6 @@ echo "脚本执行耗时：$minutes 分钟 $seconds 秒"
 
 
 # Zipfile
-find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}
-sudo cp friendlywrt-s5p4418/out/FriendlyWrt_*.zip /home/zhangjin/mount
+# find friendlywrt-s5p4418-beta/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}
+# sudo cp friendlywrt-s5p4418-beta/out/FriendlyWrt_*.zip ~/mount
+

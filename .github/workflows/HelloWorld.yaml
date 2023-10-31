@@ -5,7 +5,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: "0 0 * * 5"
+    - cron: "0 0 * * 4"
 
 jobs:
   build:
@@ -145,5 +145,5 @@ jobs:
           # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./artifact.zip
-          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-HelloWorld.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}.zip
           asset_content_type: application/zip

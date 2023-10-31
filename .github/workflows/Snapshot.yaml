@@ -1,5 +1,7 @@
 name: Snapshot Build
 
+runs-on: self-hosted
+
 on:
   push:
     branches:

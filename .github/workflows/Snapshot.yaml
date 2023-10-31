@@ -1,7 +1,5 @@
 name: Snapshot Build
 
-runs-on: self-hosted
-
 on:
   push:
     branches:
@@ -11,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout

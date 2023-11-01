@@ -1,4 +1,4 @@
-name: Snapshot Build
+name: Stable Build
 
 on:
   push:
@@ -65,7 +65,7 @@ jobs:
       - name: Build HelloWorld
         run: |
 
-          cp snapshot_config friendlywrt-s5p4418/friendlywrt/.config 
+          cp stable_config friendlywrt-s5p4418/friendlywrt/.config 
 
           # 空间不够，删除无用
           rm friendlywrt-s5p4418/out/*.img
@@ -121,7 +121,7 @@ jobs:
           find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
           cp friendlywrt-s5p4418/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
-          release_tag="Snapshot-$(date +%Y-%m-%d)"
+          release_tag="Stable-$(date +%Y-%m-%d)"
           echo "##[set-output name=release_tag;]$release_tag"
 
       - name: Create Release

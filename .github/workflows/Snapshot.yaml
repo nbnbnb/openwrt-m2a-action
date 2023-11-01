@@ -1,4 +1,4 @@
-name: HelloWorld Build
+name: Snapshot Build
 
 on:
   push:
@@ -66,7 +66,7 @@ jobs:
       - name: Build HelloWorld
         run: |
 
-          cp helloworld_config friendlywrt-s5p4418/friendlywrt/.config 
+          cp snapshot_config friendlywrt-s5p4418/friendlywrt/.config 
 
           # 空间不够，删除无用
           rm friendlywrt-s5p4418/out/*.img
@@ -87,7 +87,7 @@ jobs:
           cd ../..
 
           # diy - package-helloworld
-          echo "src-git helloworld https://github.com/nbnbnb/helloworld.git;stable" >> "feeds.conf.default"
+          echo "src-git helloworld https://github.com/nbnbnb/helloworld.git;snapshot" >> "feeds.conf.default"
           # echo "src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git^594ab7de6e68a66710f3630f2e9979c0446c7f0f" >> "feeds.conf.default"
           # echo "https://github.com/xiaorouji/openwrt-passwall.git^44f9dccb2dcd991b7bed0e7e2d9469aecfc51fd0" >> "feeds.conf.default"
 
@@ -122,7 +122,7 @@ jobs:
           find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
           cp friendlywrt-s5p4418/friendlywrt/.config ./artifact/
           zip -r artifact.zip ./artifact/
-          release_tag="HelloWorld-$(date +%Y-%m-%d)"
+          release_tag="Snapshot-$(date +%Y-%m-%d)"
           echo "##[set-output name=release_tag;]$release_tag"
 
       - name: Create Release

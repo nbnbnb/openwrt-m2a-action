@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: [self-hosted, sydney-proxy]
+    timeout-minutes: 6000
 
     steps:
       - name: Checkout

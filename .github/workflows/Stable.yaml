@@ -9,8 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, sydney-proxy]
-    timeout-minutes: 6000
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout

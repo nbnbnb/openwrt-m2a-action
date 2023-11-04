@@ -81,7 +81,7 @@ jobs:
           # diy - package-helloworld
           echo "src-git helloworld https://github.com/nbnbnb/helloworld.git;snapshot" >> "feeds.conf.default"
 
-          ./scripts/feeds update -a && ./scripts/feeds install -a
+          ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
           make download -j8
 
           # go-version 1.13 to 1.19.13

@@ -81,6 +81,9 @@ jobs:
           # diy - package-helloworld
           echo "src-git helloworld https://github.com/nbnbnb/helloworld.git;snapshot" >> "feeds.conf.default"
 
+          # diy - package-passwall
+          echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall2.git;main" >> "feeds.conf.default"
+
           ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
           make download -j8
 

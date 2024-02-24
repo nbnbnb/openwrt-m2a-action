@@ -95,6 +95,10 @@ jobs:
           cp -r lang/golang ../feeds/packages/lang/golang
           cd ../..
 
+          # 空间不够，清理
+          sudo apt-get autoremove -y
+          sudo apt-get autoclean -y
+
           # start build
           ./build.sh nanopi_m2a.mk
 

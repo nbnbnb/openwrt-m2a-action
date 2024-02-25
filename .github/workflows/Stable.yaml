@@ -91,7 +91,7 @@ jobs:
           rm -rf feeds/packages/lang/golang
           cp -r ../../packages/lang/golang feeds/packages/lang/golang
 
-          cd ../..
+          cd ..
 
           # 空间不够，清理
           sudo apt-get autoremove -y

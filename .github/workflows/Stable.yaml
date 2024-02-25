@@ -88,11 +88,8 @@ jobs:
           make download -j8
 
           # go-version 1.13 to 1.21.3
-          git clone  https://github.com/openwrt/packages.git ext-package
-          cd ext-package
-          git checkout openwrt-23.05
           rm -rf ../feeds/packages/lang/golang
-          cp -r lang/golang ../feeds/packages/lang/golang
+          cp -r packages/lang/golang ../feeds/packages/lang/golang
           cd ../..
 
           # 空间不够，清理

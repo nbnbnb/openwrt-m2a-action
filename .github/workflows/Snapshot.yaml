@@ -18,7 +18,7 @@ jobs:
         with:
           ref: master
 
-      - name: Update Python2
+      - name: Update Python
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
@@ -43,13 +43,6 @@ jobs:
           sudo apt-get install g++-9 -y
           sudo apt-get install gcc-9 -y
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-9
-
-      - name: Update Python3
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          sudo rm -rf /usr/bin/python
-          sudo ln -s /usr/bin/python3 /usr/bin/python
 
       - name: Download Source
         run: |

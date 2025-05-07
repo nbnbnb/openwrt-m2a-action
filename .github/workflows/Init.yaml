@@ -29,7 +29,7 @@ jobs:
           git clone https://github.com/nbnbnb/repo
           sudo cp repo/repo /usr/bin/
 
-          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | sudo bash     
+          wget -O - https://raw.githubusercontent.com/nbnbnb/build-env-on-ubuntu-bionic/refs/heads/master/install.sh | sudo bash     
 
           # 由于上面的脚本更新过包，下面需要再次更新 Python 引用
           sudo rm -rf /usr/bin/python

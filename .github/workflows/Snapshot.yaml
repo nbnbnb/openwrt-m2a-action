@@ -18,13 +18,6 @@ jobs:
         with:
           ref: master
 
-      - name: Download Source
-        run: |
-          mkdir friendlywrt-s5p4418
-          cd friendlywrt-s5p4418
-          repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
-          repo sync -c --no-clone-bundle -j8
-
       - name: Update Python
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -50,6 +43,13 @@ jobs:
           sudo apt-get install g++-9 -y
           sudo apt-get install gcc-9 -y
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+
+      - name: Download Source
+        run: |
+          mkdir friendlywrt-s5p4418
+          cd friendlywrt-s5p4418
+          repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
+          repo sync -c --no-clone-bundle -j8
 
       - name: Mods
         run: |

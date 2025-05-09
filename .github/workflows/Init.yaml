@@ -29,8 +29,8 @@ jobs:
 
       - name: Install Repo
         run: |
-          git clone https://github.com/friendlyarm/repo
-          sudo cp repo/repo /usr/bin/
+          git clone https://github.com/nbnbnb/friendlyarm_repo
+          sudo cp friendlyarm_repo/repo /usr/bin/
 
           wget -O - https://raw.githubusercontent.com/nbnbnb/build-env-on-ubuntu-bionic/refs/heads/master/install.sh | sudo bash     
 
@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir friendlywrt-s5p4418
           cd friendlywrt-s5p4418
-          repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
+          repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/nbnbnb/friendlyarm_repo --no-clone-bundle
           repo sync -c --no-clone-bundle -j8
 
       - name: Mods

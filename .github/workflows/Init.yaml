@@ -39,4 +39,3 @@ jobs:
           sudo ln -s /usr/bin/python2 /usr/bin/python      
 
           echo `python --version`
-          echo `python3 --version`

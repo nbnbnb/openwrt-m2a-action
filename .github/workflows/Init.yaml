@@ -38,4 +38,66 @@ jobs:
           sudo rm -rf /usr/bin/python
           sudo ln -s /usr/bin/python2 /usr/bin/python      
 
-          echo `python --version`
+          # 使用指定版本 GCC
+          sudo apt-get install g++-9 -y
+          sudo apt-get install gcc-9 -y
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+
+      - name: Download Source
+        run: |
+          sudo apt-get install python3
+          mkdir friendlywrt-s5p4418
+          cd friendlywrt-s5p4418
+          repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle
+          repo sync -c --no-clone-bundle -j8
+
+      - name: Mods
+        run: |
+          rm -rf friendlywrt-s5p4418/friendlywrt/package/network/services/hostapd
+          cd friendlywrt-s5p4418/friendlywrt/tools/m4/patches
+          wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
+
+      - name: Build OpenWrt
+        run: |
+          cp init_config friendlywrt-s5p4418/friendlywrt/.config  
+          cd friendlywrt-s5p4418                 
+          ./build.sh nanopi_m2a.mk
+
+      - name: Zip Files
+        run: |
+          find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}
+
+      - name: Assemble Artifact
+        id: assemble_artifact
+        run: |
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
+          cp friendlywrt-s5p4418/friendlywrt/.config ./artifact/
+          zip -r artifact.zip ./artifact/
+          release_tag="Init-$(date +%Y-%m-%d)"
+          echo "##[set-output name=release_tag;]$release_tag"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.repo_access }}
+        with:
+          tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          release_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.repo_access }}
+        with:
+          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
+          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifact.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}.zip
+          asset_content_type: application/zip

@@ -45,7 +45,6 @@ jobs:
 
       - name: Download Source
         run: |
-          sudo apt-get install python3
           mkdir friendlywrt-s5p4418
           cd friendlywrt-s5p4418
           repo init -u https://github.com/nbnbnb/friendlywrt_mainfests -b 19_07_1 -m s5p4418.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle

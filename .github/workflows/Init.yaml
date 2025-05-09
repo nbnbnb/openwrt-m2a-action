@@ -1,6 +1,9 @@
 name: Init Build
 
 on:
+  push:
+    branches:
+      - master
   schedule:
     - cron: "0 0 * * 6"
 

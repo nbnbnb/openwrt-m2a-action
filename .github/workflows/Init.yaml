@@ -29,7 +29,7 @@ jobs:
 
       - name: Install Repo
         run: |
-          git clone https://github.com/nbnbnb/repo
+          git clone https://github.com/friendlyarm/repo
           sudo cp repo/repo /usr/bin/
 
           wget -O - https://raw.githubusercontent.com/nbnbnb/build-env-on-ubuntu-bionic/refs/heads/master/install.sh | sudo bash     

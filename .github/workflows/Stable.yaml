@@ -106,7 +106,7 @@ jobs:
       - name: Clean
         run: |
           # 再次清理空间，打包使用
-          rm -rf friendlywrt-s5p4418/friendlywrt
+          rm -rf friendlywrt-s5p4418/friendlywrt/package
 
       - name: Zip Files
         run: |

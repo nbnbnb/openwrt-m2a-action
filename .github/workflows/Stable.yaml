@@ -103,8 +103,11 @@ jobs:
           # start build
           ./build.sh nanopi_m2a.mk
 
+      - name: Clean
+        run: |
           # 再次清理空间，打包使用
-          rm -rf ./.repo
+          rm -rf friendlywrt-s5p4418/friendlywrt
+
       - name: Zip Files
         run: |
           find friendlywrt-s5p4418/out/ -name "FriendlyWrt_*.img" | xargs -i zip -r {}.zip {}

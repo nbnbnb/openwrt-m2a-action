@@ -98,7 +98,7 @@ jobs:
           sudo apt-get autoclean -y
 
           # 空间不够，清理
-          rm -rf ./.repo/project-objects
+          rm -rf ./.repo
 
           # start build
           ./build.sh nanopi_m2a.mk

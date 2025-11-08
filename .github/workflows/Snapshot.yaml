@@ -57,6 +57,21 @@ jobs:
           cd friendlywrt-s5p4418/friendlywrt/tools/m4/patches
           wget https://raw.githubusercontent.com/keyfour/openwrt/2722d51c5cf6a296b8ecf7ae09e46690403a6c3d/tools/m4/patches/011-fix-sigstksz.patch
 
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: true
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
       - name: Build HelloWorld
         run: |
 
@@ -93,18 +108,8 @@ jobs:
 
           cd ..
 
-          # 空间不够，清理
-          sudo apt-get autoremove -y
-          sudo apt-get autoclean -y
-
-          # 空间不够，清理
-          rm -rf ./.repo/project-objects
-
           # start build
           ./build.sh nanopi_m2a.mk
-
-          # 再次清理空间，打包使用
-          rm -rf ./.repo
 
       - name: Zip Files
         run: |
